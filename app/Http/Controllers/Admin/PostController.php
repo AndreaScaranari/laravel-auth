@@ -14,7 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::orderByDesc('updated_at')->orderByDesc('created_at')->get();
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -38,7 +39,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
