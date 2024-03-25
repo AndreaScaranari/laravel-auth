@@ -25,6 +25,7 @@ class PostFactory extends Factory
             'slug' => STR::slug($title),
             'content' => fake()->paragraphs(15, true),
             'image' => fake()->imageUrl(250, 250, true),
+            'is_published' => fake()->boolean()
 
         ];
     }
