@@ -12,7 +12,7 @@
                     <option value="published" @if ($filter === 'published') selected @endif>Pubblicati</option>
                     <option value="drafts" @if ($filter === 'drafts') selected @endif>Bozze</option>
                 </select>
-                <button class="btn btn-outline-secondary" type="submit">Button</button>
+                <button class="btn btn-outline-secondary" type="submit">Filtra!</button>
             </div>
         </form>
     </header>
@@ -36,8 +36,8 @@
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->slug }}</td>
                     <td>{{ $post->is_published ? 'Pubblicato' : 'Bozza' }}</td>
-                    <td>{{ $post->created_at }}</td>
-                    <td>{{ $post->updated_at }}</td>
+                    <td>{{ $post->getFormattedDate('created_at') }}</td>
+                    <td>{{ $post->getFormattedDate('updated_at') }}</td>
                     <td>
                         <div class="d-flex justify-content-end align-items-center gap-2">
                             <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-sm btn-primary">

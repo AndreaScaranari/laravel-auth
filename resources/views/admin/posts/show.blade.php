@@ -13,8 +13,8 @@
         @endif
         <p>{{ $post->content }}</p>
         <div>
-            <strong>Creato il:</strong> {{ $post->created_at }}
-            <strong>Ultima modifica il:</strong> {{ $post->updated_at }}
+            <strong>Creato il:</strong> {{ $post->getFormattedDate('created_at', 'd-m-Y H:i:s') }}
+            <strong>Ultima modifica il:</strong> {{ $post->getFormattedDate('updated_at', 'd-m-Y H:i:s') }}
         </div>
     </div>
 
