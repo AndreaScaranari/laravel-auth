@@ -54,7 +54,11 @@
 
         </tbody>
     </table>
+    @if ($posts->hasPages())
+        {{ $posts->links() }}
+    @endif
 @endsection
+
 
 @section('scripts')
     @vite('resources/js/delete_confirmation.js')
