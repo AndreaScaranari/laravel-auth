@@ -28,7 +28,7 @@
                 <i class="fas fa-pencil me-2"></i>
                 Modifica
             </a>
-            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="delete-form">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-danger">
@@ -38,4 +38,8 @@
             </form>
         </div>
     </footer>
+@endsection
+
+@section('scripts')
+    @vite('resources/js/delete_confirmation.js')
 @endsection
