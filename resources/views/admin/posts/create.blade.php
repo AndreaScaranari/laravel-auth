@@ -34,8 +34,17 @@
             </div>
             <div class="col-1">
                 <div class="mb-3">
-                    <img src="https://marcolanci.it/boolean/assets/placeholder.png" class="img-fluid"
-                        alt="Immagine del post" id="preview" name="preview" value="{{ old('preview', '') }}">
+                    <img src="{{ old('image', 'https://marcolanci.it/boolean/assets/placeholder.png') }}" class="img-fluid"
+                        alt="Immagine del post" id="preview" name="preview">
+                </div>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="is_published" name="is_published"
+                        @if (old('is_published', '')) checked @endif>
+                    <label class="form-check-label" for="is_published">
+                        Pubblicato
+                    </label>
                 </div>
             </div>
         </div>
@@ -49,4 +58,16 @@
             </div>
         </div>
     </form>
+@endsection
+
+@section('scripts')
+    <script>
+        const placeholder = 'https://marcolanci.it/boolean/assets/placeholder.png';
+        const input = document.getElementById('image');
+        const preview = document.getElementById('preview');
+
+        input.addEventListener('input', () => {
+            preview.src = input.value || placeholder;
+        })
+    </script>
 @endsection
