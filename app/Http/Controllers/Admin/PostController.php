@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -43,6 +44,24 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate([
+            'title' => 'required|string|min:1|max:30|unique:posts',
+            'content' => 'required|string',
+            'image' => 'nullable|url',
+            'is_published' => 'nullable|boolean',
+        ],
+        [
+            'title.required' => 'Il titolo è obbligatorio',
+            'title.min' => 'Il titolo deve essere composto da almeno :min caratteri',
+            'title.max' => 'Il titolo deve essere composto al massimo da :max caratteri',
+            'title.unique' => 'Non possono esserci due post con lo stesso titolo',
+            'content.required' => 'Il contenuto è obbligatorio',
+            'image.url' => 'L\'indirizzo inserito non è valido',
+            'is_published.boolean' => 'Il valore del campo di pubblicazione non è valido',
+
+        ]);
+
         $data = $request->all();
 
         $post = new Post();
@@ -76,6 +95,24 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
+        $request->validate([
+            'title' => ['required', 'string', 'min:1', 'max:30', Rule::unique('posts')->ignore($post->id)],
+            'content' => ['required', 'string'],
+            'image' => ['nullable', 'url'],
+            'is_published' => ['nullable', 'boolean'],
+        ],
+        [
+            'title.required' => 'Il titolo è obbligatorio',
+            'title.min' => 'Il titolo deve essere composto da almeno :min caratteri',
+            'title.max' => 'Il titolo deve essere composto al massimo da :max caratteri',
+            'title.unique' => 'Non possono esserci due post con lo stesso titolo',
+            'content.required' => 'Il contenuto è obbligatorio',
+            'image.url' => 'L\'indirizzo inserito non è valido',
+            'is_published.boolean' => 'Il valore del campo di pubblicazione non è valido',
+            
+        ]);
+
         $data = $request->all();
 
         $data['slug'] = Str::slug($data['title']);

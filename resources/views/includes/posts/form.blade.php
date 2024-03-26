@@ -10,17 +10,37 @@
     <div class="col-12">
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Titolo..."
-                value="{{ old('title', $post->title) }}" required>
+            <input type="text"
+                class="form-control @error('title') is-invalid @elseif (old('title', '')) is-valid @enderror"
+                id="title" name="title" placeholder="Titolo..." value="{{ old('title', $post->title) }}" required>
+            @error('title')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @else
+                <div class="form-text">
+                    Inserisci il titolo del post
+                </div>
+            @enderror
         </div>
     </div>
     <div class="col-12">
         <div class="mb-3">
             <label for="content" class="form-label">Contenuto del Post</label>
-            <textarea class="form-control" name="content" id="content" rows="12" required>
+            <textarea class="form-control @error('content') is-invalid @elseif (old('content', '')) is-valid @enderror"
+                name="content" id="content" rows="12" required>
                         {{ old('content', $post->content) }}
-                    </textarea>
+            </textarea>
         </div>
+        @error('content')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @else
+            <div class="form-text">
+                Inserisci il contenuto del post
+            </div>
+        @enderror
     </div>
     <div class="col-11">
         <div class="mb-3">
@@ -28,6 +48,15 @@
             <input type="url" class="form-control" name="image" id="image" placeholder="http:// o https://"
                 value="{{ old('image', $post->image) }}">
         </div>
+        @error('image')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @else
+            <div class="form-text">
+                Inserisci l'URL assoluto di un file immagine
+            </div>
+        @enderror
     </div>
     <div class="col-1">
         <div class="mb-3">
@@ -37,7 +66,7 @@
     </div>
     <div class="col-12 d-flex justify-content-center">
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="is_published" name="is_published"
+            <input class="form-check-input" type="checkbox" value="1" id="is_published" name="is_published"
                 @if (old('is_published', $post->is_published)) checked @endif>
             <label class="form-check-label" for="is_published">
                 Pubblicato
