@@ -30,7 +30,7 @@ Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
     Route::patch('/posts/{post}/restore', [AdminPostController::class, 'restore'])->name('posts.restore')->withTrashed();
     Route::patch('/posts/{post}/drop', [AdminPostController::class, 'drop'])->name('posts.drop')->withTrashed();
 
-    Route::resource('posts', AdminPostController::class);
+    Route::resource('posts', AdminPostController::class)->withTrashed(['show', 'edit', 'update']);
     
     // Route::get('/posts', [PostController::class, 'index'])->name('post.index');
     // Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
