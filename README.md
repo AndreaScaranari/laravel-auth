@@ -31,3 +31,11 @@ Per oggi occupiamoci  solo di index,  show e destroy!
 - Gestiamo la classe active quando siamo sulla lista dei progetti
 - Gestiamo la classe active anche quando siamo sul dettaglio dei progetti e comunque in ogni rotta che riguarda i progetti.
 - Nascondiamo il link ai progetti per chi non è loggato
+
+## Giorno 2
+### Descrizione
+Completiamo le CRUD mancanti per il vostro sito portfolio!
+### BONUS
+tutte le cosette varie che abbiamo visto in classe!
+### SUPER BONUS
+implementare la modale di bootstrap per la cancellazione
