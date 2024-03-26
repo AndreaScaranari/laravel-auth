@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Guest\HomeController as GuestHomeController;
-use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;;
+use App\Http\Controllers\Guest\PostController as GuestPostController;;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,12 +19,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', GuestHomeController::class)->name('guest.home');
+Route::get('/posts/{slug}', [GuestPostController::class, 'show'])->name('guest.post.show');
 
 
 Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
     
     Route::get('', AdminHomeController::class)->name('home');
-    Route::resource('posts', PostController::class);
+    Route::resource('posts', AdminPostController::class);
     
     // Route::get('/posts', [PostController::class, 'index'])->name('post.index');
     // Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');

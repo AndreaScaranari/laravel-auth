@@ -7,7 +7,7 @@
 
 @csrf
 <div class="row">
-    <div class="col-12">
+    <div class="col-8">
         <div class="mb-3">
             <label for="title" class="form-label">Titolo</label>
             <input type="text"
@@ -22,6 +22,13 @@
                     Inserisci il titolo del post
                 </div>
             @enderror
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="mb-3">
+            <label for="slug" class="form-label">Slug</label>
+            <input type="text" class="form-control" id="slug" value="{{ Str::slug(old('slug', $post->title)) }}"
+                disabled>
         </div>
     </div>
     <div class="col-12">

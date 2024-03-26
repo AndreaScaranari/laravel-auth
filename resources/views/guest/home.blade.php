@@ -8,13 +8,11 @@
         <h3>Scopri i nostri post</h3>
     </header>
 
-    @if ($posts->hasPages())
-        {{ $posts->links() }}
-    @endif
     @forelse ($posts as $post)
         <div class="card my-5">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between">
                 {{ $post->title }}
+                <a href="{{ route('guest.post.show', $post->slug) }}" class="btn btn-sm btn-primary">Vedi</a>
             </div>
             <div class="card-body">
                 <div class="row">
