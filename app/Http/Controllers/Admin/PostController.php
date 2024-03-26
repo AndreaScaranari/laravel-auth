@@ -131,7 +131,28 @@ class PostController extends Controller
         $post->delete();
 
         return to_route('admin.posts.index')
-        ->with('type', 'danger')
-        ->with('message', 'Post eliminato con successo');
+            ->with('toast-button-type', 'danger')
+            ->with('toast-message', 'Post eliminato')
+            ->with('toast-label', config('app.name'))
+            ->with('toast-method', 'PATCH')
+            ->with('toast-route', route('admin.posts.restore', $post->id))
+            ->with('toast-button-label', 'Annulla');
+    }
+    
+    // * Rotte Soft Delete
+    
+    public function trash(){
+        $posts = Post::onlyTrashed()->get();
+        return view('admin.posts.trash', compact('posts'));
+    }
+    
+    public function restore(Post $post){
+        $post->restore();
+        return to_route('admin.posts.index')->with('type', 'success')->with('message', 'Post ripristinato con successo');
+    }
+    
+    public function drop(Post $post){
+        $post->forceDelete();
+        return to_route('admin.posts.trash')->with('type', 'warning')->with('message', 'Post eliminato definitivamente con successo');
     }
 }

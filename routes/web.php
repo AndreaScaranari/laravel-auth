@@ -25,6 +25,11 @@ Route::get('/posts/{slug}', [GuestPostController::class, 'show'])->name('guest.p
 Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
     
     Route::get('', AdminHomeController::class)->name('home');
+    
+    Route::get('/posts/trash', [AdminPostController::class, 'trash'])->name('posts.trash');
+    Route::patch('/posts/{post}/restore', [AdminPostController::class, 'restore'])->name('posts.restore')->withTrashed();
+    Route::patch('/posts/{post}/drop', [AdminPostController::class, 'drop'])->name('posts.drop')->withTrashed();
+
     Route::resource('posts', AdminPostController::class);
     
     // Route::get('/posts', [PostController::class, 'index'])->name('post.index');

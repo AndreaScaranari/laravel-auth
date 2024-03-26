@@ -4,24 +4,14 @@
 
 @section('content')
     <header class="d-flex align-items-center justify-content-between flex-column">
-        <h1 class="m-0">Posts</h1>
+        <h1 class="m-0">Post Eliminati</h1>
         <div class="d-flex justify-content-between w-100 p-3">
-            <a href="{{ route('admin.posts.create') }}" class="btn btn-success d-block">
-                <i class="fas fa-plus me-2"></i>Nuovo</a>
-            <form action="{{ route('admin.posts.index') }}" method="GET">
-                <div class="input-group">
-                    <select class="form-select" name="filter">
-                        <option value="">Tutti</option>
-                        <option value="published" @if ($filter === 'published') selected @endif>Pubblicati</option>
-                        <option value="drafts" @if ($filter === 'drafts') selected @endif>Bozze</option>
-                    </select>
-                    <button class="btn btn-outline-secondary" type="submit">Filtra</button>
-                </div>
-            </form>
-            <a href="{{ route('admin.posts.trash') }}" class="btn btn-secondary d-block">
-                <i class="fas fa-trash-arrow-up me-2"></i>Guarda Cestino</a>
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary d-block">
+                <i class="fas fa-arrow-left me-2"></i>Torna ai post attivi</a>
+            {{-- ! QUA SOTTO CI ANDRA' DESTROY --}}
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-danger d-block">
+                <i class="fas fa-trash me-2"></i>Svuota cestino</a>
         </div>
-
     </header>
 
     <table class="table table-dark table-striped">
@@ -53,12 +43,20 @@
                             <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-pencil"></i>
                             </a>
-                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST"
-                                class="delete-form">
+                            <form action="{{ route('admin.posts.drop', $post->id) }}" method="POST" class="drop-form">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">
                                     <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+
+                            <form action="{{ route('admin.posts.restore', $post->id) }}" method="POST"
+                                class="restore-form">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    <i class="fas fa-arrows-rotate"></i>
                                 </button>
                             </form>
                         </div>
@@ -74,9 +72,9 @@
 
         </tbody>
     </table>
-    @if ($posts->hasPages())
+    {{-- @if ($posts->hasPages())
         {{ $posts->links() }}
-    @endif
+    @endif --}}
 @endsection
 
 
