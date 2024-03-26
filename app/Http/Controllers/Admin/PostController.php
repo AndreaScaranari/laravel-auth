@@ -34,7 +34,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $post = new Post();
+        return view('admin.posts.create', compact('post'));
     }
 
     /**
@@ -67,7 +68,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -75,7 +76,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+
+        $data['slug'] = Str::slug($data['title']);
+        $data['is_published'] = Arr::exists($data, 'is_published');
+
+        $post->update($data);
+
+        return to_route('admin.posts.show', $post)->with('message','Post modificato con successo')->with('type', 'success');
     }
 
     /**
