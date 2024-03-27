@@ -1,8 +1,8 @@
 @if ($post->exists)
-    <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" novalidate>
+    <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" enctype="multipart/form-data" novalidate>
         @method('PUT')
     @else
-        <form action="{{ route('admin.posts.store') }}" method="POST" novalidate>
+        <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data" novalidate>
 @endif
 
 @csrf
@@ -50,7 +50,7 @@
         @enderror
     </div>
     <div class="col-11">
-        <div class="mb-3">
+        {{-- <div class="mb-3">
             <label for="image" class="form-label">Image</label>
             <input type="url" class="form-control" name="image" id="image" placeholder="http:// o https://"
                 value="{{ old('image', $post->image) }}">
@@ -62,6 +62,20 @@
         @else
             <div class="form-text">
                 Inserisci l'URL assoluto di un file immagine
+            </div>
+        @enderror --}}
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" name="image" id="image" placeholder="http:// o https://"
+                value="{{ old('image', $post->image) }}">
+        </div>
+        @error('image')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @else
+            <div class="form-text">
+                Carica un file immagine
             </div>
         @enderror
     </div>

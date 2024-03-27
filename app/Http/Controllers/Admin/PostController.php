@@ -7,6 +7,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
@@ -48,7 +49,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|string|min:1|max:30|unique:posts',
             'content' => 'required|string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image',
             'is_published' => 'nullable|boolean',
         ],
         [
@@ -57,7 +58,7 @@ class PostController extends Controller
             'title.max' => 'Il titolo deve essere composto al massimo da :max caratteri',
             'title.unique' => 'Non possono esserci due post con lo stesso titolo',
             'content.required' => 'Il contenuto è obbligatorio',
-            'image.url' => 'L\'indirizzo inserito non è valido',
+            'image.image' => 'Il file inserito non è un\'immagine',
             'is_published.boolean' => 'Il valore del campo di pubblicazione non è valido',
 
         ]);
@@ -69,6 +70,12 @@ class PostController extends Controller
         $post->fill($data);
         $post->slug = Str::slug($post->title);
         $post->is_published = Arr::exists($data, 'is_published');
+
+        if(Arr::exists($data, 'image')){
+            $img_url = Storage::putFile('post_images', $data['image']);
+            $post->image = $img_url;
+        }
+
         $post->save();
 
         return to_route('admin.posts.show', $post)->with('message','Post creato con successo')->with('type', 'success');
@@ -99,7 +106,7 @@ class PostController extends Controller
         $request->validate([
             'title' => ['required', 'string', 'min:1', 'max:30', Rule::unique('posts')->ignore($post->id)],
             'content' => ['required', 'string'],
-            'image' => ['nullable', 'url'],
+            'image' => ['nullable', 'image'],
             'is_published' => ['nullable', 'boolean'],
         ],
         [
@@ -108,7 +115,7 @@ class PostController extends Controller
             'title.max' => 'Il titolo deve essere composto al massimo da :max caratteri',
             'title.unique' => 'Non possono esserci due post con lo stesso titolo',
             'content.required' => 'Il contenuto è obbligatorio',
-            'image.url' => 'L\'indirizzo inserito non è valido',
+            'image.image' => 'Il file inserito non è un\'immagine',
             'is_published.boolean' => 'Il valore del campo di pubblicazione non è valido',
             
         ]);
@@ -117,6 +124,14 @@ class PostController extends Controller
 
         $data['slug'] = Str::slug($data['title']);
         $data['is_published'] = Arr::exists($data, 'is_published');
+
+        if(Arr::exists($data, 'image')){
+
+            if($post->image) Storage::delete($post->image);
+
+            $img_url = Storage::putFile('post_images', $data['image']);
+            $post->image = $img_url;
+        }
 
         $post->update($data);
 
@@ -152,7 +167,10 @@ class PostController extends Controller
     }
     
     public function drop(Post $post){
+
+        if($post->image) Storage::delete($post->image);
         $post->forceDelete();
+        
         return to_route('admin.posts.trash')->with('type', 'warning')->with('message', 'Post eliminato definitivamente con successo');
     }
 }
