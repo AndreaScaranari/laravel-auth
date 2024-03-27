@@ -16,7 +16,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    @if ($post->image)
+                    @if ($post->printImage())
                         <div class="col-3">
                             <img src="{{ $post->image }}" alt="{{ $post->title }}">
                         </div>

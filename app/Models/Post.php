@@ -15,6 +15,10 @@ class Post extends Model
     protected $fillable = ['title', 'slug', 'content', 'is_published'];
 
     public function getFormattedDate($column, $format = 'd-m-Y'){
-    return Carbon::create($this->$column)->format($format);
-}
+    return Carbon::create($this->$column)->format($format);    
+    }
+
+    public function printImage(){
+        return asset('storage/' . $this->image);
+    }
 }

@@ -66,7 +66,7 @@
         @enderror --}}
         <div class="mb-3">
             <label for="image" class="form-label">Image</label>
-            <input type="file" class="form-control" name="image" id="image" placeholder="http:// o https://"
+            <input type="file" class="form-control" name="image" id="image" placeholder="Carica un'immagine"
                 value="{{ old('image', $post->image) }}">
         </div>
         @error('image')
@@ -81,7 +81,7 @@
     </div>
     <div class="col-1">
         <div class="mb-3">
-            <img src="{{ old('image', $post->image ?? 'https://marcolanci.it/boolean/assets/placeholder.png') }}"
+            <img src="{{ old('image', $post->image) ? $post->printImage() : 'https://marcolanci.it/boolean/assets/placeholder.png' }}"
                 class="img-fluid" alt="Immagine del post" id="preview" name="preview">
         </div>
     </div>

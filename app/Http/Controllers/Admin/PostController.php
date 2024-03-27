@@ -72,7 +72,11 @@ class PostController extends Controller
         $post->is_published = Arr::exists($data, 'is_published');
 
         if(Arr::exists($data, 'image')){
-            $img_url = Storage::putFile('post_images', $data['image']);
+
+            if($post->image) Storage::delete($post->image);
+            $extensions = $data['image']->extension();
+
+            $img_url = Storage::putFile('post_images', $data['image'], "$post->slug.$extension");
             $post->image = $img_url;
         }
 
@@ -128,8 +132,9 @@ class PostController extends Controller
         if(Arr::exists($data, 'image')){
 
             if($post->image) Storage::delete($post->image);
+            $extensions = $data['image']->extension();
 
-            $img_url = Storage::putFile('post_images', $data['image']);
+            $img_url = Storage::putFile('post_images', $data['image'], "{$data['slug']}.$extension");
             $post->image = $img_url;
         }
 
@@ -170,7 +175,7 @@ class PostController extends Controller
 
         if($post->image) Storage::delete($post->image);
         $post->forceDelete();
-        
+
         return to_route('admin.posts.trash')->with('type', 'warning')->with('message', 'Post eliminato definitivamente con successo');
     }
 }
