@@ -76,7 +76,7 @@ class PostController extends Controller
             if($post->image) Storage::delete($post->image);
             $extensions = $data['image']->extension();
 
-            $img_url = Storage::putFileAs('post_images', $data['image'], "$post->slug.$extension");
+            $img_url = Storage::putFileAs('post_images', $data['image'], "$post->slug.$extensions");
             $post->image = $img_url;
         }
 
@@ -134,7 +134,7 @@ class PostController extends Controller
             if($post->image) Storage::delete($post->image);
             $extensions = $data['image']->extension();
 
-            $img_url = Storage::putFileAs('post_images', $data['image'], "{$data['slug']}.$extension");
+            $img_url = Storage::putFileAs('post_images', $data['image'], "{$data['slug']}.$extensions");
             $post->image = $img_url;
         }
 

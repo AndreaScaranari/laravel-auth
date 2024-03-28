@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+{{-- @dd($post->printImage()) --}}
 @section('title', 'Posts')
 
 @section('content')
