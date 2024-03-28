@@ -50,8 +50,10 @@
         @enderror
     </div>
     <div class="col-11">
-        {{-- <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
+        <div class="mb-3">
+            {{-- # In precedenza per l'url --}}
+
+            {{-- <label for="image" class="form-label">Image</label>
             <input type="url" class="form-control" name="image" id="image" placeholder="http:// o https://"
                 value="{{ old('image', $post->image) }}">
         </div>
@@ -62,13 +64,28 @@
         @else
             <div class="form-text">
                 Inserisci l'URL assoluto di un file immagine
-            </div>
+            
         @enderror --}}
-        <div class="mb-3">
-            <label for="image" class="form-label">Image</label>
-            <input type="file" class="form-control" name="image" id="image" placeholder="Carica un'immagine"
-                value="{{ old('image', $post->image) }}">
+            {{-- # Forma corretta ma non posso inserire il value a causa del fatto che i type=file non accettano questa proprietà --}}
+            {{-- <div class="mb-3">
+            <label for="image" class="form-label">Carica un file immagine</label>
+            <input type="file" class="form-control" name="image" id="image"
+                placeholder="Nessun file selezionato">
+        </div> --}}
+            {{-- # trick per usare il value --}}
+            <label for="image" class="form-label">Carica un file immagine</label>
+
+            <div @class(['input-group', 'd-none' => !$post->image]) id="old-img-field">
+                <button class="btn btn-outline-secondary" type="button" id="change-image-button">Cambia
+                    immagine</button>
+                <input type="text" class="form-control" value="{{ old('image', $post->image) }}" disabled>
+            </div>
+
+            <input type="file"
+                class="form-control @error('image') is-invalid @elseif(old('image', '')) is-valid @enderror @if ($post->image) d-none @endif"
+                name="image" id="image" placeholder="Nessun file selezionato">
         </div>
+
         @error('image')
             <div class="invalid-feedback">
                 {{ $message }}
@@ -82,7 +99,8 @@
     <div class="col-1">
         <div class="mb-3">
             <img src="{{ old('image', $post->image) ? $post->printImage() : 'https://marcolanci.it/boolean/assets/placeholder.png' }}"
-                class="img-fluid" alt="Immagine del post" id="preview" name="preview">
+                class="img-fluid" alt=" {{ $post->image ? $post->title : 'Immagine del post' }} " id="preview"
+                name="preview">
         </div>
     </div>
     <div class="col-12 d-flex justify-content-center">
