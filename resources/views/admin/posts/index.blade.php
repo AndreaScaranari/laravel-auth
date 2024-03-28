@@ -57,7 +57,8 @@
                                 class="delete-form">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
+                                <button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#modal">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
@@ -77,6 +78,7 @@
     @if ($posts->hasPages())
         {{ $posts->links() }}
     @endif
+
 @endsection
 
 

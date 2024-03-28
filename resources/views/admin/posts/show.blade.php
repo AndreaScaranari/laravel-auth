@@ -32,7 +32,7 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-danger">
-                    <i class="fas fa-trash me-2"></i>
+                    <i class="fas fa-trash me-2" data-bs-toggle="modal" data-bs-target="#modal"></i>
                     Elimina
                 </button>
             </form>

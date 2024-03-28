@@ -44,6 +44,8 @@
 
     @include('includes.toast')
 
+    @include('includes.modal')
+
     @yield('scripts')
 </body>
 
