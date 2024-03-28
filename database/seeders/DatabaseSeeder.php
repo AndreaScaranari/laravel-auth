@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        \App\Models\Project::factory(15)->create();
+        \App\Models\Post::factory(15)->create();
     }
 }

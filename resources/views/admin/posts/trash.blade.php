@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Progetti')
+@section('title', 'Posts')
 
 @section('content')
     <header class="d-flex align-items-center justify-content-between flex-column">
-        <h1 class="m-0">Progetti Eliminati</h1>
+        <h1 class="m-0">Post Eliminati</h1>
         <div class="d-flex justify-content-between w-100 p-3">
-            <a href="{{ route('admin.projectss.index') }}" class="btn btn-secondary d-block">
-                <i class="fas fa-arrow-left me-2"></i>Torna ai projects attivi</a>
-            <a href="{{ route('admin.projectss.index') }}" class="btn btn-danger d-block">
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary d-block">
+                <i class="fas fa-arrow-left me-2"></i>Torna ai post attivi</a>
+            {{-- ! QUA SOTTO CI ANDRA' DESTROY --}}
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-danger d-block">
                 <i class="fas fa-trash me-2"></i>Svuota cestino</a>
         </div>
     </header>
@@ -26,24 +27,23 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($projectss as $projects)
+            @forelse ($posts as $post)
                 <tr>
-                    <th scope="row">{{ $projects->id }}</th>
-                    <td>{{ $projects->title }}</td>
-                    <td>{{ $projects->slug }}</td>
-                    <td>{{ $projects->is_published ? 'Pubblicato' : 'Bozza' }}</td>
-                    <td>{{ $projects->getFormattedDate('created_at') }}</td>
-                    <td>{{ $projects->getFormattedDate('updated_at') }}</td>
+                    <th scope="row">{{ $post->id }}</th>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ $post->slug }}</td>
+                    <td>{{ $post->is_published ? 'Pubblicato' : 'Bozza' }}</td>
+                    <td>{{ $post->getFormattedDate('created_at') }}</td>
+                    <td>{{ $post->getFormattedDate('updated_at') }}</td>
                     <td>
                         <div class="d-flex justify-content-end align-items-center gap-2">
-                            <a href="{{ route('admin.projectss.show', $projects) }}" class="btn btn-sm btn-primary">
+                            <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-sm btn-primary">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ route('admin.projectss.edit', $projects) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-pencil"></i>
                             </a>
-                            <form action="{{ route('admin.projectss.drop', $projects->id) }}" method="POST"
-                                class="drop-form">
+                            <form action="{{ route('admin.posts.drop', $post->id) }}" method="POST" class="drop-form">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger">
@@ -51,7 +51,7 @@
                                 </button>
                             </form>
 
-                            <form action="{{ route('admin.projectss.restore', $projects->id) }}" method="POST"
+                            <form action="{{ route('admin.posts.restore', $post->id) }}" method="POST"
                                 class="restore-form">
                                 @csrf
                                 @method('PATCH')
@@ -65,15 +65,15 @@
             @empty
                 <tr>
                     <td colspan="7">
-                        <h3 class="text-center">Non ci sono projects da mostrare!</h3>
+                        <h3 class="text-center">Non ci sono post da mostrare!</h3>
                     </td>
                 </tr>
             @endforelse
 
         </tbody>
     </table>
-    {{-- @if ($projectss->hasPages())
-        {{ $projectss->links() }}
+    {{-- @if ($posts->hasPages())
+        {{ $posts->links() }}
     @endif --}}
 @endsection
 

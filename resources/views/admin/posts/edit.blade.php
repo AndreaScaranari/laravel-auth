@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Modifica Progetto')
+@section('title', 'Modifica Post')
 
 @section('content')
     <header>
-        <h1>Nuovo Progetto</h1>
+        <h1>Nuovo Post</h1>
     </header>
 
-    @include('includes.projects.form')
+    @include('includes.posts.form')
 
 @endsection
 
