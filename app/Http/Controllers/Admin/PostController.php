@@ -178,4 +178,16 @@ class PostController extends Controller
 
         return to_route('admin.posts.trash')->with('type', 'warning')->with('message', 'Post eliminato definitivamente con successo');
     }
+
+    // * Rotta toggle switch in index
+    public function toggle(Post $post){
+        $post->is_published = !$post->is_published;
+
+        $action = $post->is_published ? 'pubblicato' : 'salvato come bozza';
+        $type = $post->is_published ? 'success' : 'info';
+
+        $post->save();
+
+        return back()->with('message', "il post $post->title è stato $action")->with('type', $type);
+    }
 }

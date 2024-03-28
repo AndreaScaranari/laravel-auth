@@ -30,7 +30,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Slug</th>
-                <th scope="col">Stato Pubblicazione</th>
+                <th scope="col">Pubblicato</th>
                 <th scope="col">Creato il</th>
                 <th scope="col">Ultima modifica</th>
                 <th></th>
@@ -42,7 +42,19 @@
                     <th scope="row">{{ $post->id }}</th>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->slug }}</td>
-                    <td>{{ $post->is_published ? 'Pubblicato' : 'Bozza' }}</td>
+                    <td>
+                        <form action="{{ route('admin.posts.toggle', $post) }}" method="POST" class="publication-form"
+                            onclick="this.submit()">
+                            @csrf
+                            @method('PATCH')
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="button"
+                                    id="{{ 'is_published-' . $post->id }}" @if ($post->is_published) checked @endif>
+                                <label class="form-check-label" for="{{ 'is_published-' . $post->id }}">
+                                    {{ $post->is_published ? 'Pubblicato' : 'Bozza' }}</label>
+                            </div>
+                        </form>
+                    </td>
                     <td>{{ $post->getFormattedDate('created_at') }}</td>
                     <td>{{ $post->getFormattedDate('updated_at') }}</td>
                     <td>
