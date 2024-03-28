@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Storage;
 
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Project>
  */
-class PostFactory extends Factory
+class ProjectFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -25,9 +25,9 @@ class PostFactory extends Factory
         $slug = STR::slug($title);
         $img = fake()->image(null, 250, 250);
 
-        Storage::makeDirectory('post_images');
+        Storage::makeDirectory('project_images');
 
-        $img_url = Storage::putFileAs('post_images', $img, "$slug.png");
+        $img_url = Storage::putFileAs('project_images', $img, "$slug.png");
 
         return [
             'title' => $title,

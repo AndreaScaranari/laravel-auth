@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Posts')
+@section('title', 'Progetti')
 
 @section('content')
     <header class="d-flex align-items-center justify-content-between flex-column">
-        <h1 class="m-0">Posts</h1>
+        <h1 class="m-0">Progetti</h1>
         <div class="d-flex justify-content-between w-100 p-3">
-            <a href="{{ route('admin.posts.create') }}" class="btn btn-success d-block">
+            <a href="{{ route('admin.projectss.create') }}" class="btn btn-success d-block">
                 <i class="fas fa-plus me-2"></i>Nuovo</a>
-            <form action="{{ route('admin.posts.index') }}" method="GET">
+            <form action="{{ route('admin.projectss.index') }}" method="GET">
                 <div class="input-group">
                     <select class="form-select" name="filter">
                         <option value="">Tutti</option>
@@ -18,7 +18,7 @@
                     <button class="btn btn-outline-secondary" type="submit">Filtra</button>
                 </div>
             </form>
-            <a href="{{ route('admin.posts.trash') }}" class="btn btn-secondary d-block">
+            <a href="{{ route('admin.projectss.trash') }}" class="btn btn-secondary d-block">
                 <i class="fas fa-trash-arrow-up me-2"></i>Guarda Cestino</a>
         </div>
 
@@ -37,35 +37,36 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($posts as $post)
+            @forelse ($projectss as $projects)
                 <tr>
-                    <th scope="row">{{ $post->id }}</th>
-                    <td>{{ $post->title }}</td>
-                    <td>{{ $post->slug }}</td>
+                    <th scope="row">{{ $projects->id }}</th>
+                    <td>{{ $projects->title }}</td>
+                    <td>{{ $projects->slug }}</td>
                     <td>
-                        <form action="{{ route('admin.posts.toggle', $post) }}" method="POST" class="publication-form"
-                            onclick="this.submit()">
+                        <form action="{{ route('admin.projectss.toggle', $projects) }}" method="POST"
+                            class="publication-form" onclick="this.submit()">
                             @csrf
                             @method('PATCH')
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" role="button"
-                                    id="{{ 'is_published-' . $post->id }}" @if ($post->is_published) checked @endif>
-                                <label class="form-check-label" for="{{ 'is_published-' . $post->id }}">
-                                    {{ $post->is_published ? 'Pubblicato' : 'Bozza' }}</label>
+                                    id="{{ 'is_published-' . $project->id }}"
+                                    @if ($project->is_published) checked @endif>
+                                <label class="form-check-label" for="{{ 'is_published-' . $project->id }}">
+                                    {{ $project->is_published ? 'Pubblicato' : 'Bozza' }}</label>
                             </div>
                         </form>
                     </td>
-                    <td>{{ $post->getFormattedDate('created_at') }}</td>
-                    <td>{{ $post->getFormattedDate('updated_at') }}</td>
+                    <td>{{ $project->getFormattedDate('created_at') }}</td>
+                    <td>{{ $project->getFormattedDate('updated_at') }}</td>
                     <td>
                         <div class="d-flex justify-content-end align-items-center gap-2">
-                            <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-sm btn-primary">
+                            <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-sm btn-primary">
                                 <i class="fas fa-eye"></i>
                             </a>
-                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-sm btn-warning">
+                            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-sm btn-warning">
                                 <i class="fas fa-pencil"></i>
                             </a>
-                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST"
+                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST"
                                 class="delete-form">
                                 @csrf
                                 @method('DELETE')
@@ -80,15 +81,15 @@
             @empty
                 <tr>
                     <td colspan="7">
-                        <h3 class="text-center">Non ci sono post da mostrare!</h3>
+                        <h3 class="text-center">Non ci sono progetti da mostrare!</h3>
                     </td>
                 </tr>
             @endforelse
 
         </tbody>
     </table>
-    @if ($posts->hasPages())
-        {{ $posts->links() }}
+    @if ($projects->hasPages())
+        {{ $projects->links() }}
     @endif
 
 @endsection

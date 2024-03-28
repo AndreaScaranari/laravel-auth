@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Post;
+use App\Models\Project;
 
 class HomeController extends Controller
 {
     public function __invoke()
     {
-        $posts = Post::orderByDesc('created_at')->limit(5);
-        return view('admin.home', compact('posts'));
+        $projects = Project::orderByDesc('created_at')->limit(5);
+        return view('admin.home', compact('projects'));
     }
 }

@@ -4,27 +4,27 @@
 
 @section('content')
     <header>
-        <h1>Boolpress</h1>
-        <h3>Scopri i nostri post</h3>
+        <h1>Il mio portfolio</h1>
+        <h3>Scopri i progetti realizzati durante Boolean</h3>
     </header>
 
-    @forelse ($posts as $post)
+    @forelse ($projects as $project)
         <div class="card my-5">
             <div class="card-header d-flex justify-content-between">
-                {{ $post->title }}
-                <a href="{{ route('guest.post.show', $post->slug) }}" class="btn btn-sm btn-primary">Vedi</a>
+                {{ $project->title }}
+                <a href="{{ route('guest.project.show', $project->slug) }}" class="btn btn-sm btn-primary">Vedi</a>
             </div>
             <div class="card-body">
                 <div class="row">
-                    @if ($post->image)
+                    @if ($project->image)
                         <div class="col-3">
-                            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
+                            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}">
                         </div>
                     @endif
                 </div>
 
                 <div class="col">
-                    <h5 class="card-title mb-3">{{ $post->title }}</h5>
+                    <h5 class="card-title mb-3">{{ $project->title }}</h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
@@ -35,6 +35,6 @@
             </div>
         </div>
     @empty
-        <h3 class="text-center">Non ci sono post da mostrare</h3>
+        <h3 class="text-center">Non ci sono progetti da mostrare</h3>
     @endforelse
 @endsection

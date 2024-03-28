@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Guest\HomeController as GuestHomeController;
-use App\Http\Controllers\Admin\PostController as AdminPostController;;
-use App\Http\Controllers\Guest\PostController as GuestPostController;;
+use App\Http\Controllers\Admin\ProjectController as AdminProjectController;;
+use App\Http\Controllers\Guest\ProjectController as GuestProjectController;;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,28 +19,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', GuestHomeController::class)->name('guest.home');
-Route::get('/posts/{slug}', [GuestPostController::class, 'show'])->name('guest.post.show');
+Route::get('/projects/{slug}', [GuestProjectController::class, 'show'])->name('guest.project.show');
 
 
 Route::prefix('/admin')->name('admin.')->middleware('auth')->group(function(){
     
     Route::get('', AdminHomeController::class)->name('home');
     
-    Route::get('/posts/trash', [AdminPostController::class, 'trash'])->name('posts.trash');
-    Route::patch('/posts/{post}/restore', [AdminPostController::class, 'restore'])->name('posts.restore')->withTrashed();
-    Route::delete('/posts/{post}/drop', [AdminPostController::class, 'drop'])->name('posts.drop')->withTrashed();
+    Route::get('/projects/trash', [AdminProjectController::class, 'trash'])->name('projects.trash');
+    Route::patch('/projects/{project}/restore', [AdminProjectController::class, 'restore'])->name('projects.restore')->withTrashed();
+    Route::delete('/projects/{project}/drop', [AdminProjectController::class, 'drop'])->name('projects.drop')->withTrashed();
 
-    Route::patch('/posts/{post}/toggle', [AdminPostController::class, 'toggle'])->name('posts.toggle');
+    Route::patch('/projects/{project}/toggle', [AdminProjectController::class, 'toggle'])->name('projects.toggle');
 
-    Route::resource('posts', AdminPostController::class)->withTrashed(['show', 'edit', 'update']);
+    Route::resource('projects', AdminProjectController::class)->withTrashed(['show', 'edit', 'update']);
     
-    // Route::get('/posts', [PostController::class, 'index'])->name('post.index');
-    // Route::get('/posts/create', [PostController::class, 'create'])->name('post.create');
-    // Route::get('/posts/{post}', [PostController::class, 'show'])->name('post.show');
-    // Route::post('/posts', [PostController::class, 'store'])->name('post.store');
-    // Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
-    // Route::put('/posts/{post}', [PostController::class, 'update'])->name('post.update');
-    // Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('post.destroy');
+    // Route::get('/projects', [ProjectController::class, 'index'])->name('project.index');
+    // Route::get('/projects/create', [ProjectController::class, 'create'])->name('project.create');
+    // Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('project.show');
+    // Route::post('/projects', [ProjectController::class, 'store'])->name('project.store');
+    // Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->name('project.edit');
+    // Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('project.update');
+    // Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('project.destroy');
 });
 
 Route::middleware('auth')->group(function () {
